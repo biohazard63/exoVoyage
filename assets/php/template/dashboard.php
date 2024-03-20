@@ -10,6 +10,6 @@
         <?php echo '<h2> dashboard </h2>'; ?>
     </div>
 
-
+<script src="../../js/script.js"></script>
 </body>
 </html>

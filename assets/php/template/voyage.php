@@ -12,6 +12,8 @@ include 'nav.php';
 <div class="content">
     <?php echo '<h2> liste des voyage </h2>'; ?>
 
+    <button class="add">Ajouter un voyage</button>
+
     <div class="tableauTravel">
         <table>
             <tr>
@@ -57,17 +59,30 @@ include 'nav.php';
 
             ];
 
-           foreach ($voyages as $voyage) {
-    echo '<tr>';
-    echo '<td>' . $voyage['id'] . '</td>';
-    echo '<td>' . $voyage['destination'] . '</td>';
-    echo '<td>' . $voyage['date'] . '</td>';
-    echo '<td><a href="edit.php?id=' . $voyage['id'] . '">Edit</a> | <a href="delete.php?id=' . $voyage['id'] . '">Delete</a></td>';
-    echo '</tr>';
-}
+            foreach ($voyages as $voyage) {
+                echo '<tr>';
+                echo '<td>' . $voyage['id'] . '</td>';
+                echo '<td>' . $voyage['destination'] . '</td>';
+                echo '<td>' . $voyage['date'] . '</td>';
+                echo '<td><a class="add edit" href="#" data-id="' . $voyage['id'] . '" data-destination="' . $voyage['destination'] . '" data-date="' . $voyage['date'] . '">Edit</a>  <a class="add" href="delete.php?id=' . $voyage['id'] . '">Delete</a></td>';
+                echo '</tr>';
+            }
             ?>
         </table>
     </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="add_voyage.php" method="post">
+                <label for="destination">Destination:</label><br>
+                <input type="text" id="destination" name="destination"><br>
+                <label for="date">Date:</label><br>
+                <input type="date" id="date" name="date"><br>
+                <input type="submit" value="Ajouter">
+            </form>
+        </div>
+    </div>
 </div>
+<script src="../../js/script.js"></script>
 </body>
 </html>

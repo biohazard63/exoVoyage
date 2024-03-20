@@ -11,5 +11,4 @@
             <li><a href="voyage.php">Listes des Voyage</a></li>
             <li><a href="../../../index.php">Deconnexion</a></li>
         </ul>
-    <script src="../../js/script.js"></script>
     </div>
