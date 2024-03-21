@@ -1,25 +1,25 @@
 <?php
+
+require_once '../db/config.php';
 // Démarrer la session
 session_start();
 
+$db = new Database();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer le nom d'utilisateur et le mot de passe du formulaire
     $username = $_POST['username']; // Change 'username' to 'email'
     $password = $_POST['psw'];
 
-
-
     try {
         // Connexion à la base de données
-        $conn = new PDO('mysql:host=localhost;dbname=exo_voyage;charset=utf8', 'root', '');
+        $conn = $db->connect();
 
         // Sélectionner l'utilisateur de la base de données
         $sql = "SELECT * FROM user WHERE username = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
 
         // Vérifier si l'utilisateur existe et si le mot de passe est correct
         if ($user && $password == $user['password']) {

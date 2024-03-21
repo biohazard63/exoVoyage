@@ -9,6 +9,6 @@
         <ul class="nav">
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="voyage.php">Listes des Voyage</a></li>
-            <li><a href="../../../index.php">Deconnexion</a></li>
+            <li><a href="../controller/logout.php">Deconnexion</a></li>
         </ul>
     </div>

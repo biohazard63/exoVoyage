@@ -73,16 +73,23 @@ include 'nav.php';
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <form action="add_voyage.php" method="post">
-                <label for="destination">Destination:</label><br>
-                <input type="text" id="destination" name="destination"><br>
-                <label for="date">Date:</label><br>
-                <input type="date" id="date" name="date"><br>
+            <form method="post" action="assets/php/controller/add_voyage.php">
+                <label for="title">Titre du voyage:</label><br>
+                <input type="text" id="title" name="title" required><br>
+                <label for="description">Description:</label><br>
+                <textarea id="description" name="description" required></textarea><br>
+                <label for="date">Date du voyage:</label><br>
+                <input type="date" id="date" name="date" required><br>
+                <label for="category_id">Catégorie:</label><br>
+                <select id="modal_category_id" name="category_id" required></select>
+                <label for="formula_id">Formule:</label><br>
+                <select id="modal_formula_id" name="formula_id" required></select><br>
                 <input type="submit" value="Ajouter">
             </form>
         </div>
     </div>
 </div>
 <script src="../../js/script.js"></script>
+<script src="../../js/fetch_categories_and_formulas.js"></script>
 </body>
 </html>
