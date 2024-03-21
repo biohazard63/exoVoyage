@@ -33,3 +33,38 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+
+document.querySelectorAll('.delete').forEach(function(button) {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // Afficher une boîte de dialogue de confirmation
+        if (confirm('Êtes-vous sûr de vouloir supprimer ce voyage ?')) {
+            // Envoyer une requête AJAX pour supprimer le voyage
+            fetch('../controller/delete_voyage.php', {
+                method: 'POST',
+                body: JSON.stringify({
+                    id: this.dataset.id
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Supprimer la ligne du tableau
+                    this.parentElement.parentElement.remove();
+
+                    // Rediriger vers la page des voyages avec une notification de suppression
+                    setTimeout(function() {
+                        window.location.href = '../template/voyage.php?deleted=true';
+                    }, 1000); // Attendre 1 seconde avant la redirection
+                } else {
+                    alert('Une erreur est survenue lors de la suppression du voyage.');
+                }
+            });
+        }
+    });
+});

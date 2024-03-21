@@ -1,30 +1,31 @@
 window.onload = function() {
-    console.log('Fetching categories and formulas...');
-    fetch('../../php/controller/fetch_categories_and_formulas.php')
-    .then(response => {
-        console.log('Received response:', response);
-        return response.json();
-    })
-    .then(data => {
-        console.log('Received data:', data);
-        const modalCategorySelect = document.getElementById('modal_category_id');
-        const modalFormulaSelect = document.getElementById('modal_formula_id');
+    // Fetch categories and formulas from the server
+    fetch('../controller/fetch_categories_and_formulas.php') // Update the path here
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
 
-        console.log('Select elements:', modalCategorySelect, modalFormulaSelect);
+            // Select the category and formula select elements
+            const categorySelect = document.getElementById('category_id');
+            const formulaSelect = document.getElementById('formula_id');
 
-        data.categories.forEach(category => {
-            const option = document.createElement('option');
-            option.value = category.id;
-            option.text = category.name;
-            modalCategorySelect.add(option);
+            // Add categories to the category select element
+            data.categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.text = category.name;
+                categorySelect.add(option);
+            });
+
+            // Add formulas to the formula select element
+            data.formulas.forEach(formula => {
+                const option = document.createElement('option');
+                option.value = formula.id;
+                option.text = formula.name;
+                formulaSelect.add(option);
+            });
+        })
+        .catch(error => {
         });
-
-        data.formulas.forEach(formula => {
-            const option = document.createElement('option');
-            option.value = formula.id;
-            option.text = formula.name;
-            modalFormulaSelect.add(option);
-        });
-    })
-    .catch(error => console.error('An error occurred:', error));
-};
+}

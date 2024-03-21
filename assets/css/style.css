@@ -212,6 +212,16 @@ input[type="text"], input[type="password"] {
   cursor: pointer;
 }
 
+.notification {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
 
 /***************************responsive*************************/
 @media (max-width: 600px) {

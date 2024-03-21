@@ -1,3 +1,25 @@
+<?php
+session_start();
+
+require_once '../db/config.php';
+
+$db = new Database();
+$conn = $db->connect();
+
+// Exécuter la requête SQL pour sélectionner tous les voyages
+$sql = "SELECT * FROM travel";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+
+// Récupérer tous les voyages
+$voyages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Vérifier si un voyage a été supprimé
+if (isset($_GET['deleted']) && $_GET['deleted'] == 'true') {
+    $_SESSION['notification'] = "Voyage supprimé avec succès !";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,7 +34,18 @@ include 'nav.php';
 <div class="content">
     <?php echo '<h2> liste des voyage </h2>'; ?>
 
+    <?php
+    // Afficher le message de notification s'il existe
+    if (isset($_SESSION['notification'])) {
+        echo '<div class="notification">' . $_SESSION['notification'] . '</div>';
+
+        // Supprimer le message de notification
+        unset($_SESSION['notification']);
+    }
+    ?>
+
     <button class="add">Ajouter un voyage</button>
+
 
     <div class="tableauTravel">
         <table>
@@ -23,48 +56,13 @@ include 'nav.php';
                 <th>Action</th>
             </tr>
             <?php
-            // Pour l'instant, je vais utiliser un tableau de données fictives.
-            $voyages = [
-                ['id' => 1, 'destination' => 'Paris', 'date' => '2022-01-01'],
-                ['id' => 2, 'destination' => 'Londres', 'date' => '2022-02-01'],
-                ['id' => 3, 'destination' => 'Madrid', 'date' => '2022-03-01'],
-                ['id' => 4, 'destination' => 'Rome', 'date' => '2022-04-01'],
-                ['id' => 5, 'destination' => 'Berlin', 'date' => '2022-05-01'],
-                ['id' => 6, 'destination' => 'Amsterdam', 'date' => '2022-06-01'],
-                ['id' => 7, 'destination' => 'Lisbonne', 'date' => '2022-07-01'],
-                ['id' => 8, 'destination' => 'Bruxelles', 'date' => '2022-08-01'],
-                ['id' => 9, 'destination' => 'Prague', 'date' => '2022-09-01'],
-                ['id' => 10, 'destination' => 'Vienne', 'date' => '2022-10-01'],
-                ['id' => 11, 'destination' => 'Athènes', 'date' => '2022-11-01'],
-                ['id' => 12, 'destination' => 'Budapest', 'date' => '2022-12-01'],
-                ['id' => 13, 'destination' => 'Varsovie', 'date' => '2023-01-01'],
-                ['id' => 14, 'destination' => 'Stockholm', 'date' => '2023-02-01'],
-                ['id' => 15, 'destination' => 'Copenhague', 'date' => '2023-03-01'],
-                ['id' => 16, 'destination' => 'Oslo', 'date' => '2023-04-01'],
-                ['id' => 17, 'destination' => 'Helsinki', 'date' => '2023-05-01'],
-                ['id' => 18, 'destination' => 'Dublin', 'date' => '2023-06-01'],
-                ['id' => 19, 'destination' => 'Bucarest', 'date' => '2023-07-01'],
-                ['id' => 20, 'destination' => 'Sofia', 'date' => '2023-08-01'],
-                ['id' => 21, 'destination' => 'Nicosie', 'date' => '2023-09-01'],
-                ['id' => 22, 'destination' => 'Tallinn', 'date' => '2023-10-01'],
-                ['id' => 23, 'destination' => 'Riga', 'date' => '2023-11-01'],
-                ['id' => 24, 'destination' => 'Vilnius', 'date' => '2023-12-01'],
-                ['id' => 25, 'destination' => 'Luxembourg', 'date' => '2024-01-01'],
-                ['id' => 26, 'destination' => 'Malte', 'date' => '2024-02-01'],
-                ['id' => 27, 'destination' => 'La Valette', 'date' => '2024-03-01'],
-                ['id' => 28, 'destination' => 'Nicosie', 'date' => '2024-04-01'],
-                ['id' => 29, 'destination' => 'Bratislava', 'date' => '2024-05-01'],
-                ['id' => 30, 'destination' => 'hells', 'date' => '2026-06-6'],
-
-
-            ];
-
+            // Parcourir tous les voyages et les afficher dans le tableau
             foreach ($voyages as $voyage) {
                 echo '<tr>';
-                echo '<td>' . $voyage['id'] . '</td>';
-                echo '<td>' . $voyage['destination'] . '</td>';
-                echo '<td>' . $voyage['date'] . '</td>';
-                echo '<td><a class="add edit" href="#" data-id="' . $voyage['id'] . '" data-destination="' . $voyage['destination'] . '" data-date="' . $voyage['date'] . '">Edit</a>  <a class="add" href="delete.php?id=' . $voyage['id'] . '">Delete</a></td>';
+                echo '<td>' . $voyage['id_travel'] . '</td>';
+                echo '<td>' . $voyage['titel'] . '</td>';
+                echo '<td>' . $voyage['date_start'] . ' - ' . $voyage['date_end'] . '</td>';
+                echo '<td><button class="add edit" data-id="' . $voyage['id_travel'] . '" data-destination="' . $voyage['titel'] . '" data-date="' . $voyage['date_start'] . ' - ' . $voyage['date_end'] . '">Edit</button>  <button class="add delete" data-id="' . $voyage['id_travel'] . '">Delete</button></td>';
                 echo '</tr>';
             }
             ?>
@@ -73,17 +71,23 @@ include 'nav.php';
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <form method="post" action="assets/php/controller/add_voyage.php">
-                <label for="title">Titre du voyage:</label><br>
-                <input type="text" id="title" name="title" required><br>
+            <form method="post" action="../controller/add_voyage.php">
+                <label for="titel">Titre du voyage:</label><br>
+                <input type="text" id="titel" name="titel" required><br>
+                <label for="image_url">URL de l'image:</label><br>
+                <input type="text" id="image_url" name="image_url" required><br>
                 <label for="description">Description:</label><br>
                 <textarea id="description" name="description" required></textarea><br>
-                <label for="date">Date du voyage:</label><br>
-                <input type="date" id="date" name="date" required><br>
+                <label for="date_start">Date de début du voyage:</label><br>
+                <input type="date" id="date_start" name="date_start" required><br>
+                <label for="date_end">Date de fin du voyage:</label><br>
+                <input type="date" id="date_end" name="date_end" required><br>
+                <label for="price">Prix:</label><br>
+                <input type="number" step="0.01" id="price" name="price" required><br>
                 <label for="category_id">Catégorie:</label><br>
-                <select id="modal_category_id" name="category_id" required></select>
+                <select id="category_id" name="category_id" required></select>
                 <label for="formula_id">Formule:</label><br>
-                <select id="modal_formula_id" name="formula_id" required></select><br>
+                <select id="formula_id" name="formula_id" required></select><br>
                 <input type="submit" value="Ajouter">
             </form>
         </div>
