@@ -62,37 +62,37 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    document.querySelectorAll('.edit').forEach(function (button) {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
+   document.querySelectorAll('.edit').forEach(function (button) {
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
 
-            // Récupérer les informations du voyage
-            var id = this.dataset.id;
-            var destination = this.dataset.destination;
-            var image_url = this.dataset.image_url;
-            var description = this.dataset.description;
-            var date = this.dataset.date.split(' - ');
-            var price = this.dataset.price;
-            var category_id = this.dataset.category_id;
-            var formula_id = this.dataset.formula_id;
+        // Récupérer les informations du voyage
+        var id = this.dataset.id;
+        var destination = this.dataset.destination;
+        var image_url = this.dataset.image_url;
+        var description = this.dataset.description;
+        var date = this.dataset.date.split(' - ');
+        var price = this.dataset.price;
+        var category_id = this.dataset.category_id;
+        var formula_id = this.dataset.formula_id;
 
-            // Remplir le formulaire avec les informations du voyage
-            document.getElementById('id').value = id; // Add this line
-            document.getElementById('titel').value = destination;
-            document.getElementById('image_url').value = image_url;
-            document.getElementById('description').value = description;
-            document.getElementById('date_start').value = date[0];
-            document.getElementById('date_end').value = date[1];
-            document.getElementById('price').value = price;
-            document.getElementById('category_id').value = category_id;
-            document.getElementById('formula_id').value = formula_id;
+        // Remplir le formulaire avec les informations du voyage
+        document.getElementById('id').value = id;
+        document.getElementById('titel').value = destination;
+        // Ne pas définir la valeur de l'élément "image" car il s'agit d'un input de type file
+        document.getElementById('description').value = description;
+        document.getElementById('date_start').value = date[0];
+        document.getElementById('date_end').value = date[1];
+        document.getElementById('price').value = price;
+        document.getElementById('category_id').value = category_id;
+        document.getElementById('formula_id').value = formula_id;
 
-            // Modifier l'action du formulaire
-            document.querySelector('form').action = '../controller/update_voyage.php';
+        // Modifier l'action du formulaire
+        document.querySelector('form').action = '../controller/update_voyage.php';
 
-            // Afficher le formulaire
-            modal.style.display = "block";
-        });
+        // Afficher le formulaire
+        modal.style.display = "block";
     });
+});
 
 });
