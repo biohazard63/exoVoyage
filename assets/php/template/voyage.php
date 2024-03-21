@@ -57,7 +57,12 @@ include 'nav.php';
             <tr>
                 <th>Id</th>
                 <th>Destination</th>
+                <th>description</th>
+                <th>image</th>
                 <th>Date</th>
+                <th>Price</th>
+                <th>category</th>
+                <th>formule</th>
                 <th>Action</th>
             </tr>
             <?php
@@ -66,8 +71,13 @@ include 'nav.php';
                 echo '<tr>';
                 echo '<td>' . $voyage['id_travel'] . '</td>';
                 echo '<td>' . $voyage['titel'] . '</td>';
+                echo '<td>' . $voyage['description'] . '</td>';
+                echo '<td><img src="' . $voyage['image_url'] . '" alt="' . $voyage['titel'] . '"></td>';
                 echo '<td>' . $voyage['date_start'] . ' - ' . $voyage['date_end'] . '</td>';
-                echo '<td><button class="add edit" data-id="' . $voyage['id_travel'] . '" data-destination="' . $voyage['titel'] . '" data-image_url="' . $voyage['image_url'] . '" data-description="' . $voyage['description'] . '" data-date="' . $voyage['date_start'] . ' - ' . $voyage['date_end'] . '" data-price="' . $voyage['price'] . '" data-category_id="' . $voyage['category_id'] . '" data-formula_id="' . $voyage['formula_id'] . '">Edit</button>  <button class="add delete" data-id="' . $voyage['id_travel'] . '">Delete</button></td>';
+                echo '<td>' . $voyage['price'] . ' €</td>';
+                echo '<td>' . $voyage['category_id'] . '</td>';
+                echo '<td>' . $voyage['formula_id'] . '</td>';
+                echo '<td><button class="add edit" data-id="' . $voyage['id_travel'] . '" data-destination="' . $voyage['titel'] . '" data-image_url="' . $voyage['image_url'] . '" data-description="' . $voyage['description'] . '" data-date="' . $voyage['date_start'] . ' - ' . $voyage['date_end'] . '" data-price="' . $voyage['price'] . '" data-category_id="' . $voyage['category_id'] . '" data-formula_id="' . $voyage['formula_id'] . '">Modifier</button>  <button class="add delete" data-id="' . $voyage['id_travel'] . '">Supprimer</button></td>';
                 echo '</tr>';
             }
             ?>
@@ -84,11 +94,11 @@ include 'nav.php';
                 <input type="text" id="image_url" name="image_url" required><br>
                 <label for="description">Description:</label><br>
                 <textarea id="description" name="description" required></textarea><br>
-                <label for="date_start">Date de début du voyage:</label><br>
+                <label for="date_start">Date de début du voyage :</label><br>
                 <input type="date" id="date_start" name="date_start" required><br>
                 <label for="date_end">Date de fin du voyage:</label><br>
                 <input type="date" id="date_end" name="date_end" required><br>
-                <label for="price">Prix:</label><br>
+                <label for="price">Prix :</label><br>
                 <input type="number" step="0.01" id="price" name="price" required><br>
                 <label for="category_id">Catégorie:</label><br>
                 <select id="category_id" name="category_id" required></select>

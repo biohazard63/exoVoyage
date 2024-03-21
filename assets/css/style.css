@@ -1,8 +1,17 @@
+:root {
+    --primary-color: #1a75bc;
+    --secondary-color: #333;
+    --background-color: #f4f4f4;
+    --font-family: Arial, sans-serif;
+    --base-font-size: 16px;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: var(--font-family);
+    background-color: var(--background-color);
     margin: 0;
     padding: 0;
+    font-size: var(--base-font-size);
 }
 
 .container {
@@ -64,6 +73,23 @@ input[type="text"], input[type="password"] {
 }
 /***************************Dashboard*************************/
 
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    background-color: #1c87c9; /* Change this to your preferred shade of gray */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
+}
+.grid-item {
+    background-color: #f3f3f3;
+    height: 100px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .burger {
     cursor: pointer;
     display: block;
@@ -82,9 +108,12 @@ input[type="text"], input[type="password"] {
     list-style-type: none;
     padding: 0;
 }
+li {
+    margin-top: 1rem;
+}
 #avatar{
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     margin-right: 10px;
 }
@@ -93,31 +122,46 @@ input[type="text"], input[type="password"] {
     text-decoration: none;
     color: #333;
 }
+.sidebar hr {
+    width: 100%;
+    border: 0;
+    border-top: 2px solid #efefef;
+}
 .sidebar {
+    display: flex;
     width: 200px;
-    height: 100vh;
-    background-color: #333;
-    color: #fff;
     position: fixed;
+    height: 100%;
+    background-color: #333;
     padding: 20px;
+    color: #fff;
+    flex-direction: column;
+    align-items: center;
 }
 
-.sidebar ul {
+
+.sidebar p {
+    margin-bottom: 20px;
+}
+
+.sidebar .nav {
     list-style-type: none;
     padding: 0;
 }
 
-.sidebar ul li a {
+.sidebar .nav li {
+    margin-bottom: 10px;
+}
+
+.sidebar .nav li a {
     color: #fff;
     text-decoration: none;
 }
-
 .dash{
     margin-top: 1rem;
     margin-right: 1rem;
     width: 80%;
     height: 40rem;
-    background-color: #1a75bc;
     float: right;
 }
 
@@ -146,7 +190,7 @@ input[type="text"], input[type="password"] {
 .tableauTravel th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: left;
+    text-align: center;
     background-color: #1a75bc;
     color: white;
 }
@@ -158,6 +202,12 @@ input[type="text"], input[type="password"] {
 
 .tableauTravel a:hover {
     text-decoration: underline;
+}
+img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 .add {
     background-color: #1a75bc;
@@ -191,11 +241,58 @@ input[type="text"], input[type="password"] {
 }
 
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
+  background-color: #fafafa; /* Couleur de fond plus douce */
+  margin: 1% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  border-radius: 10px; /* Bordures arrondies */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Ombre portée */
+  width: 50%;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="password"],
+.modal-content input[type="number"],
+.modal-content input[type="date"],
+.modal-content select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.modal-content textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    resize: vertical; /* Permet à l'utilisateur de redimensionner le textarea verticalement */
+}
+
+.modal-content label {
+    font-size: 1em;
+    color: var(--secondary-color);
+    display: block;
+    margin-bottom: .3125rem;
+}
+
+.modal-content input[type="submit"] {
+    display: block;
+    width: 100%;
+    height: 50px;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.125em;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content input[type="submit"]:hover {
+    background-color: #0e4d7a;
 }
 
 .close {
@@ -203,6 +300,7 @@ input[type="text"], input[type="password"] {
   float: right;
   font-size: 28px;
   font-weight: bold;
+  transition: color 0.2s; /* Transition douce */
 }
 
 .close:hover,
